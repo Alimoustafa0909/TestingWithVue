@@ -1,12 +1,30 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mount } from "@vue/test-utils";
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
-})
+const App = {
+  props: {
+    count: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    isEven(count) {
+      return count % 2 === 0;
+    }
+  },
+  template: `
+    <div>
+      Count: {{ count }} - Is even: {{ isEven(count) }}
+    </div>
+  `
+};
+
+test("App", () => {
+  const wrapper = mount(App, {
+    props: {
+      count: 3
+    }
+  });
+  console.log(wrapper.html());
+  expect(wrapper.html()).toContain("true");
+});
